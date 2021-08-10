@@ -16,10 +16,13 @@ public class MapKitSearchViewController: UIViewController, UIGestureRecognizerDe
     @IBAction public func closeDidTap() {
         if let navigationController = navigationController {
             navigationController.popViewController(animated: true)
+            self.didClose?()
         } else {
             dismiss(animated: true)
+            self.didClose?()
         }
     }
+    public var didClose: (() -> Void)?
     @IBOutlet private var nearMeParent: UIView!
     public var nearMe: MKUserTrackingButton?
     @IBOutlet private var compassParent: UIView!
