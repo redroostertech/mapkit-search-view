@@ -750,14 +750,26 @@ extension MapKitSearchViewController: CLLocationManagerDelegate {
             }
             break
         case .denied:
-            let sharedSelector = NSSelectorFromString("sharedApplication")
-            guard
-                UIApplication.responds(to: sharedSelector),
-                let shared = UIApplication.perform(sharedSelector)?.takeUnretainedValue() as? UIApplication else
-            {
-                fatalError("[Extensions cannot access Application]")
-            }
-            shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:]) { [weak self] _ in
+//            let sharedSelector = NSSelectorFromString("sharedApplication")
+//            guard
+//                UIApplication.responds(to: sharedSelector),
+//                let shared = UIApplication.perform(sharedSelector)?.takeUnretainedValue() as? UIApplication else
+//            {
+//                fatalError("[Extensions cannot access Application]")
+//            }
+//            shared.open(URL(string: UIApplication.openSettingsURLString)!, options: [:]) { [weak self] _ in
+//                // TODO: Check if conflicts with locationManager(manager: didChangeAuthorization:)
+//                switch CLLocationManager.authorizationStatus() {
+//                case .authorizedAlways, .authorizedWhenInUse:
+//                    self?.locationManager.requestLocation()
+//                    break
+//                default:
+//                    break
+//                }
+//            }
+            let url = URL(string: UIApplication.openSettingsURLString)!
+            let context = NSExtensionContext()
+            context.open(url) { [weak self] _ in
                 // TODO: Check if conflicts with locationManager(manager: didChangeAuthorization:)
                 switch CLLocationManager.authorizationStatus() {
                 case .authorizedAlways, .authorizedWhenInUse:
@@ -767,6 +779,15 @@ extension MapKitSearchViewController: CLLocationManagerDelegate {
                     break
                 }
             }
+            var responder = self as UIResponder?
+
+            while (responder != nil) {
+              if responder?.responds(to: Selector("openURL:")) == true{
+                responder?.perform(Selector("openURL:"), with: url)
+              }
+              responder = responder!.next
+            }
+
             break
         default:
             break
