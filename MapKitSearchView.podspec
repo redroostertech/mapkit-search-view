@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.source = { :git => 'https://github.com/philip-bui/mapkit-search-view.git', :tag => s.version }
   s.documentation_url = 'https://github.com/philip-bui/mapkit-search-view'
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '13.0'
  
   s.source_files = 'Sources/**/*.swift'
   s.resources    = ['Sources/Resources/*', 'Sources/**/*.xib']
