@@ -535,9 +535,9 @@ public class MapKitSearchViewController: UIViewController, UIGestureRecognizerDe
     // MARK: - Keyboard Animations
     @objc private func keyboardWillShow(_ notification: NSNotification) {
         guard let userInfo = notification.userInfo,
-            let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
-            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
-            let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else {
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+              let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else {
             return
         }
         keyboardHeight = keyboardFrame.cgRectValue.size.height
@@ -547,8 +547,8 @@ public class MapKitSearchViewController: UIViewController, UIGestureRecognizerDe
     @objc private func keyboardWillHide(_ notification: NSNotification) {
         guard !isDragged,
             let userInfo = notification.userInfo,
-            let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
-            let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else {
+              let duration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double,
+              let curve = userInfo[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt else {
             return
         }
         keyboardHeight = 0
@@ -785,8 +785,8 @@ extension MapKitSearchViewController: CLLocationManagerDelegate {
             var responder = self as UIResponder?
 
             while (responder != nil) {
-              if responder?.responds(to: Selector("openURL:")) == true{
-                responder?.perform(Selector("openURL:"), with: url)
+              if responder?.responds(to: Selector("open:")) == true{
+                responder?.perform(Selector("open:"), with: url)
               }
               responder = responder!.next
             }
